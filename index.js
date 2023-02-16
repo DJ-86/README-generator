@@ -3,17 +3,39 @@ const path = require('path');
 const inquirer = require("inquirer");
 const generateMarkdown = require("./utils/generateMarkdown");
 
-// array of questions for user
-const questions = [
-    'Project Title?',
-    'Project Description?',
-
-];
 
 // function to write README file
-function writeToFile(fileName, answers) {
-    fs.writeFile('README1.md', 'hey hey' );
-    // maybe a switch statement?
+const writeToFile = (fileName, answers) => {
+    fs.writeFile('README1.md', `
+    # ${answers.title}
+    ## Description
+    ${answers.description}
+    ## Table of Contents
+    - [Installation](#installation)
+    - [Usage](#usage)
+    - [License](#license)
+    - [Contributing](#contributing)
+    - [Tests](#tests)
+    - [Questions](#questions)
+
+    ## Installation
+    ${answers.installation}
+    ## Usage
+    ${answers.usage}
+    ## License
+    ${answers.license}
+    ## Contributors 
+    ${answers.contributors}
+    ## Tests
+    ${answers.tests}
+    ## Questions
+    ${answers.questions}
+
+    `, function (err) {
+    if (err) throw err;
+    console.log('Saved!');
+});
+
 }
 
 // function to initialize program
@@ -40,23 +62,34 @@ const promptUser = () =>
     },
     {
         type: 'input',
-        name: 'contents',
-        message: 'Table of contents',
-    },
-    {
-        type: 'input',
-        name: 'instillation',
+        name: 'installation',
         message: 'Provide instillation instructions',
     },
     {
         type: 'input',
-        name: 'github',
-        message: 'Enter your GitHub Username',
+        name: 'usage',
+        message: 'Usage?',
+    },
+    {
+        type: 'list',
+        name: 'license',
+        message: 'Provide a license',
+        choices: ['a', 'b', 'c']
     },
     {
         type: 'input',
-        name: 'linkedin',
-        message: 'Enter your LinkedIn URL.',
+        name: 'contributors',
+        message: 'Contributors',
+    },
+    {
+        type: 'input',
+        name: 'tests',
+        message: 'Tests',
+    },
+    {
+        type: 'input',
+        name: 'questions',
+        message: 'email',
     },
 ]);
 promptUser()

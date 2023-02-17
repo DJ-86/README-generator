@@ -1,29 +1,24 @@
+
 const fs = require("fs");
-const path = require('path');
 const inquirer = require("inquirer");
+const util = require('util');
 const generateMarkdown = require("./utils/generateMarkdown");
 
-// array of questions for user
-const questions = [
-    'Project Title?',
-    'Project Description?',
+// turns the writeToFile function into a promise based function
+const writeTofileAsync = util.promisify(fs.writeFile);
 
-];
 
-// function to write README file
-function writeToFile(fileName, answers) {
-    fs.writeFile('README1.md', 'hey hey' );
-    // maybe a switch statement?
-}
+const writeToFile = (fileName, data) => {
+    return writeTofileAsync(fileName, data)
+        .then(() => console.log(`Successfully wrote to ${fileName}`))
+        .catch((err) => console.error(err));
+};
 
-// function to initialize program
 function init() {
-
+    promptUser()
+        .then((answers) => writeToFile('README1.md', generateMarkdown(answers)))
+        .catch((err) => console.error(err));
 }
-
-// function call to initialize program
-init();
-
 
 
 const promptUser = () =>
@@ -40,26 +35,37 @@ const promptUser = () =>
     },
     {
         type: 'input',
-        name: 'contents',
-        message: 'Table of contents',
-    },
-    {
-        type: 'input',
-        name: 'instillation',
+        name: 'installation',
         message: 'Provide instillation instructions',
     },
     {
         type: 'input',
-        name: 'github',
-        message: 'Enter your GitHub Username',
+        name: 'usage',
+        message: 'Usage?',
+    },
+    {
+        type: 'list',
+        name: 'license',
+        message: 'Provide a license',
+        choices: ['a', 'b', 'c']
     },
     {
         type: 'input',
-        name: 'linkedin',
-        message: 'Enter your LinkedIn URL.',
+        name: 'contributors',
+        message: 'Contributors',
+    },
+    {
+        type: 'input',
+        name: 'tests',
+        message: 'Tests',
+    },
+    {
+        type: 'input',
+        name: 'questions',
+        message: 'email',
     },
 ]);
-promptUser()
-.then((answers) => writeToFile('README1.md', (answers)))
-.then(() => console.log('Successfully wrote to README'))
-.catch((err) => console.error(err));
+
+
+init();
+

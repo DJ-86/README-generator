@@ -1,51 +1,24 @@
+
 const fs = require("fs");
-const path = require('path');
 const inquirer = require("inquirer");
+const util = require('util');
 const generateMarkdown = require("./utils/generateMarkdown");
 
+// turns the writeToFile function into a promise based function
+const writeTofileAsync = util.promisify(fs.writeFile);
 
-// function to write README file
-const writeToFile = (fileName, answers) => {
-    fs.writeFile('README1.md', `
-    # ${answers.title}
-    ## Description
-    ${answers.description}
-    ## Table of Contents
-    - [Installation](#installation)
-    - [Usage](#usage)
-    - [License](#license)
-    - [Contributing](#contributing)
-    - [Tests](#tests)
-    - [Questions](#questions)
 
-    ## Installation
-    ${answers.installation}
-    ## Usage
-    ${answers.usage}
-    ## License
-    ${answers.license}
-    ## Contributors 
-    ${answers.contributors}
-    ## Tests
-    ${answers.tests}
-    ## Questions
-    ${answers.questions}
+const writeToFile = (fileName, data) => {
+    return writeTofileAsync(fileName, data)
+        .then(() => console.log(`Successfully wrote to ${fileName}`))
+        .catch((err) => console.error(err));
+};
 
-    `, function (err) {
-    if (err) throw err;
-    console.log('Saved!');
-});
-
-}
-
-// function to initialize program
 function init() {
-
+    promptUser()
+        .then((answers) => writeToFile('README1.md', generateMarkdown(answers)))
+        .catch((err) => console.error(err));
 }
-
-// function call to initialize program
-init();
-
 
 
 const promptUser = () =>
@@ -92,7 +65,7 @@ const promptUser = () =>
         message: 'email',
     },
 ]);
-promptUser()
-.then((answers) => writeToFile('README1.md', (answers)))
-.then(() => console.log('Successfully wrote to README'))
-.catch((err) => console.error(err));
+
+
+init();
+

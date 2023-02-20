@@ -36,7 +36,7 @@ const promptUser = () =>
     {
         type: 'input',
         name: 'installation',
-        message: 'Provide instillation instructions',
+        message: 'Provide installation instructions',
     },
     {
         type: 'input',
@@ -65,7 +65,7 @@ const promptUser = () =>
     },
     {
         type: 'input',
-        name: 'questions',
+        name: 'email',
         message: 'E-mail',
     },
     {

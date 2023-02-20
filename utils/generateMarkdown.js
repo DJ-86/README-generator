@@ -1,9 +1,10 @@
 // function to generate markdown for README
 function generateMarkdown(answers) {
+    //takes the input provided and returns a string literal that can be used in our markdown
     const contributorLinks = answers.contributors.map(contributor => `\n[${contributor}](https://www.github.com/${contributor})  `);
     answers.combined = contributorLinks.join(' ');
 
-    console.log(answers.contributors);
+    //checks which license is selected and adds a badge
     switch(answers.license) {
         case 'Apache 2.0 License':
             answers.badge = '[![License: Apache](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)'
@@ -78,32 +79,33 @@ function generateMarkdown(answers) {
             answers.badge = '[![License: Zlib](https://img.shields.io/badge/License-Zlib-lightgrey.svg)](https://opensource.org/licenses/Zlib)'
             break;
         }
-      
-  return `
-  ${answers.badge};
-  # ${answers.title}
-  ## Description
-  ${answers.description}
-  ## Table of Contents
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [License](#license)
-  - [Contributing](#contributing)
-  - [Tests](#tests)
-  - [Questions](#questions)
+return `
+${answers.badge}
+# ${answers.title}
+## Description
+${answers.description}
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+- [License](#license)
+- [Contributing](#contributors)
+- [Tests](#tests)
+- [Questions](#questions)
 
-  ## Installation
-  ${answers.installation}
-  ## Usage
-  ${answers.usage}
-  ## License
-  ${answers.license}
-  ## Contributors 
-  ${answers.combined}
-  ## Tests
-  ${answers.tests}
-  ## Questions
-  ${answers.questions}
+## Installation
+${answers.installation}
+## Usage
+${answers.usage}
+## License
+This project is licensed under ${answers.license}
+## Contributors 
+${answers.combined}
+## Tests
+${answers.tests}
+## Questions
+If you have any questions feel free to contact me.
+[${answers.github}](https://www.github.com/${answers.github})
+[${answers.email}](mailto:${answers.email})
 
 `;
 }

@@ -52,10 +52,10 @@ const promptUser = () =>
     {
         type: 'input',
         name: 'contributors',
-        message: 'Enter the name of any contributors (separated by commas):',
+        message: 'Enter the github username of any contributors:',
         filter: function (value) {
           // Split the input string into an array of keywords
-        return value.split(',');
+        return value.split(' ');
         }
     },
     {
@@ -66,10 +66,13 @@ const promptUser = () =>
     {
         type: 'input',
         name: 'questions',
-        message: 'email',
+        message: 'E-mail',
+    },
+    {
+        type: 'input',
+        name: 'github',
+        message: 'Github username?',
     },
 ]);
 
-
 init();
-

@@ -16,7 +16,7 @@ const writeToFile = (fileName, data) => {
 
 function init() {
     promptUser()
-        .then((answers) => writeToFile('README1.md', generateMarkdown(answers)))
+        .then((answers) => writeToFile('README.md', generateMarkdown(answers)))
         .catch((err) => console.error(err));
 }
 
@@ -35,8 +35,17 @@ const promptUser = () =>
     },
     {
         type: 'input',
+        name: 'images',
+        message: 'Provide image file names from /assets/readme-images (supports .jpg)',
+        filter: function (value) {
+          // Split the input string into an array of keywords
+        return value.split(' ');
+        }
+    },
+    {
+        type: 'input',
         name: 'installation',
-        message: 'Provide instillation instructions',
+        message: 'Provide installation instructions',
     },
     {
         type: 'input',
@@ -65,7 +74,7 @@ const promptUser = () =>
     },
     {
         type: 'input',
-        name: 'questions',
+        name: 'email',
         message: 'E-mail',
     },
     {

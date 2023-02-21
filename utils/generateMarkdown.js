@@ -4,6 +4,10 @@ function generateMarkdown(answers) {
     const contributorLinks = answers.contributors.map(contributor => `\n[${contributor}](https://www.github.com/${contributor})  `);
     answers.combined = contributorLinks.join(' ');
 
+    const images = answers.images.map(image => `\n ![${image}](./assets/readme-images/${image}.jpg)`);
+    answers.images = images.join(' ');
+    console.log(answers.images)
+
     //checks which license is selected and adds a badge
     switch(answers.license) {
         case 'Apache 2.0 License':
@@ -80,6 +84,7 @@ function generateMarkdown(answers) {
             break;
         }
 return `
+
 ${answers.badge}
 # ${answers.title}
 ## Description
@@ -92,10 +97,14 @@ ${answers.description}
 - [Tests](#tests)
 - [Questions](#questions)
 
+
+## Images 
+${answers.images}
 ## Installation
 ${answers.installation}
 ## Usage
 ${answers.usage}
+[Demo](https://watch.screencastify.com/v/QnHmhn0zivS5S5jM61WB)
 ## License
 This project is licensed under ${answers.license}
 ## Contributors 
@@ -106,6 +115,9 @@ ${answers.tests}
 If you have any questions feel free to contact me.
 [${answers.github}](https://www.github.com/${answers.github})
 [${answers.email}](mailto:${answers.email})
+
+
+This README has been generated using a [README Generator](https://github.com/DJ-86/README-generator) 
 
 `;
 }
